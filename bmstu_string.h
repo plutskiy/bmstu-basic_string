@@ -4,18 +4,24 @@
 
 namespace bmstu {
     template<typename T>
-    class string {
+    class basic_string;
+
+    using string = basic_string<char>;
+    using wstring = basic_string<wchar_t>;
+
+    template<typename T>
+    class basic_string {
     public:
 
         ///Конструктор по умолчанию
-        string() {
+        basic_string() {
             ptr_ = new T[1];
             *ptr_ = '\0';
             size_ = 0;
         }
 
         /// Конструктор с параметром "cи строкой"
-        string(T const *c_str) {
+        basic_string(T const *c_str) {
             clean_();
             size_ = strlen_(c_str);
             if (size_ == 0) {
@@ -33,7 +39,7 @@ namespace bmstu {
 
 
         /// Копирующий конструктор
-        string(const string<T> &other) {
+        basic_string(const basic_string<T> &other) {
             if (this != &other) {
                 size_ = other.size_;
                 ptr_ = new T[size_ + 1];
@@ -45,7 +51,7 @@ namespace bmstu {
         }
 
         /// Конструктор перемещения
-        string(string &&dying) {
+        basic_string(basic_string &&dying) {
             if (this != &dying) {
                 clean_();
                 ptr_ = dying.ptr_;
@@ -56,7 +62,7 @@ namespace bmstu {
         }
 
         /// Деструктор
-        ~string() {
+        ~basic_string() {
             delete[] ptr_;
         }
 
@@ -71,7 +77,7 @@ namespace bmstu {
         }
 
         /// Оператор копирующего присваивания
-        string &operator=(const string &other) {
+        basic_string &operator=(const basic_string &other) {
             if (this != &other) {
                 size_ = other.size_;
                 ptr_ = new T[size_ + 1];
@@ -84,7 +90,7 @@ namespace bmstu {
         }
 
         /// Оператор перемещающего присваивания
-        string &operator=(string<T> &&other) {
+        basic_string &operator=(basic_string<T> &&other) {
             if (this != &other) {
                 this->clean_();
                 ptr_ = other.ptr_;
@@ -96,7 +102,7 @@ namespace bmstu {
         }
 
         /// Оператор присваивания си строки
-        string &operator=(const T *c_str) {
+        basic_string &operator=(const T *c_str) {
             this->clean_();
             size_ = strlen_(c_str);
             ptr_ = new T[size_ + 1];
@@ -108,21 +114,35 @@ namespace bmstu {
         }
 
         ///Оператор конкотинации
-        friend bmstu::string<T> operator+(const string<T> &left, const string<T> &right) {
-            bmstu::string result(left);
+        friend bmstu::basic_string<T> operator+(const basic_string<T> &left, const basic_string<T> &right) {
+            bmstu::basic_string result(left);
             result += right;
             return result;
         }
 
         /// Оператор передачи строки в топок
-        friend std::ostream &operator<<(std::ostream &os, const string &obj) {
+        friend std::ostream &operator<<(std::ostream &os, const basic_string &obj) {
             os << obj.c_str();
             return os;
         }
 
+        /// скорее всего метод должен быть шаблонным
         /// Оператор получения строки из потока
-        friend std::istream &operator>>(std::istream &is, string<T> &obj) {
-            bmstu::string<T> result;
+        friend std::istream &operator>>(std::istream &is, basic_string<T> &obj) {
+            /* с какой-то такой реализацией
+             *  basic_string result;
+            T buf = ' ';
+            while (is.good()) {
+                buf = is.get();
+                if (buf == -1){
+                    break;
+                }
+                result += buf;
+            }
+            obj = std::move(result);
+            return is;
+             */
+            bmstu::basic_string<T> result;
             T buf;
             while (is.good()) {
                 is.get(buf);
@@ -135,8 +155,8 @@ namespace bmstu {
             return is;
         }
 
-        ///Конкотинирующий оператор присваивания класса bmstu::string другой строки этого же класса
-        string &operator+=(const string &other) {
+        ///Конкотинирующий оператор присваивания класса bmstu::basic_string другой строки этого же класса
+        basic_string &operator+=(const basic_string &other) {
             size_t new_size = size_ + other.size_;
             auto new_ptr = new T[new_size + 1];
             for (int i = 0; i < size_; i++) {
@@ -152,8 +172,8 @@ namespace bmstu {
             return *this;
         }
 
-        /// Прибавление к строке класса bmstu::string символа char
-        string &operator+=(T symbol) {
+        /// Прибавление к строке класса bmstu::basic_string символа char
+        basic_string &operator+=(T symbol) {
             auto new_size = size_ + 1;
             auto new_ptr = new T[new_size + 1];
             for (auto i = 0; i < size_; ++i) {
@@ -172,7 +192,7 @@ namespace bmstu {
             if (index < size_) {
                 return *(ptr_ + index);
             }
-            throw std::runtime_error("Index " + std::to_string(index) + " is not in the string");
+            throw std::runtime_error("Index " + std::to_string(index) + " is not in the basic_string");
         }
 
     private:
