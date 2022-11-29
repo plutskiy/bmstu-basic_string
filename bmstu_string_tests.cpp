@@ -112,6 +112,7 @@ TEST(Operator, SimvolaPoIndexu) {
     ASSERT_EQ(str[2], 'i');
     ASSERT_THROW(str[100], std::runtime_error);
 }
+
 TEST(Operator, RuSimvolaPoIndexu) {
     bmstu::basic_string<wchar_t> str = L"Ива Ершор";
     ASSERT_EQ(str[6], L'ш');
