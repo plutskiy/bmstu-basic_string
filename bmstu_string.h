@@ -20,6 +20,16 @@ namespace bmstu {
             size_ = 0;
         }
 
+        ///Конструктор пустой строки определённого размера
+        basic_string(size_t size) {
+            ptr_ = new T[size];
+            size_ = size;
+            for (size_t i = 0; i != size_; ++i){
+                *(ptr_ + i) = ' ';
+            }
+            ptr_[size_] = '\0';
+        }
+
         /// Конструктор с параметром "cи строкой"
         basic_string(T const *c_str) {
             clean_();
@@ -95,8 +105,9 @@ namespace bmstu {
                 this->clean_();
                 ptr_ = other.ptr_;
                 size_ = other.size_;
+                other.ptr_ = new T[1];
+                *other.ptr_ = '\0';
                 other.size_ = 0;
-                other.ptr_ = nullptr;
             }
             return *this;
         }
@@ -112,7 +123,6 @@ namespace bmstu {
             ptr_[size_] = '\0';
             return *this;
         }
-
         ///Оператор конкотинации
         friend bmstu::basic_string<T> operator+(const basic_string<T> &left, const basic_string<T> &right) {
             bmstu::basic_string result(left);
@@ -120,39 +130,38 @@ namespace bmstu {
             return result;
         }
 
-        /// Оператор передачи строки в топок
-        friend std::ostream &operator<<(std::ostream &os, const basic_string &obj) {
-            os << obj.c_str();
-            return os;
-        }
-
-        /// скорее всего метод должен быть шаблонным
         /// Оператор получения строки из потока
-        friend std::istream &operator>>(std::istream &is, basic_string<T> &obj) {
-            /* с какой-то такой реализацией
-             *  basic_string result;
+
+        template<class S>
+        friend S &operator>>(S &is, basic_string<T> &obj) {
+            bmstu::basic_string<T> result;
             T buf = ' ';
             while (is.good()) {
                 buf = is.get();
-                if (buf == -1){
+                if (buf == -1) {
                     break;
                 }
                 result += buf;
             }
             obj = std::move(result);
             return is;
-             */
-            bmstu::basic_string<T> result;
-            T buf;
-            while (is.good()) {
-                is.get(buf);
-                if (buf == '\n') {
-                    obj = std::move(result);
-                    break;
-                }
-                result += buf;
+        }
+        /// Оператор передачи строки в топок
+        template<class S>
+
+        friend S &operator<<(S &os, const basic_string<T> &obj) {
+            os << obj.c_str();
+            return os;
+        }
+
+        ///Список инициализации
+        basic_string(std::initializer_list<T> ch) :  ptr_(new T[ch.size() + 1]) {
+            ptr_[ch.size()] = 0;
+            size_ = ch.size();
+            for (int i = 0; i < ch.size(); i++) {
+                ptr_[i] = *(ch.begin() + i);
             }
-            return is;
+            ptr_[size_] = '\0';
         }
 
         ///Конкотинирующий оператор присваивания класса bmstu::basic_string другой строки этого же класса

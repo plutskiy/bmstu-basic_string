@@ -137,7 +137,7 @@ TEST(Operator, RuCout) {
 
 TEST(Operator, cin) {
     std::stringstream str;
-    str.str("lol\n");
+    str.str("lol");
     bmstu::basic_string str2("bebra");
     str >> str2;
     ASSERT_STREQ(str2.c_str(), "lol");
@@ -145,7 +145,7 @@ TEST(Operator, cin) {
 
 TEST(Operator, RUcin) {
     std::stringstream str;
-    str.str("Стэковерфлоу программист\n");
+    str.str("Стэковерфлоу программист");
     bmstu::basic_string str2("Питон лучше С++");
     str >> str2;
     ASSERT_STREQ(str2.c_str(), "Стэковерфлоу программист");
@@ -276,29 +276,29 @@ TEST(StringTest, InitializerListConstructor) {
     ASSERT_EQ(str.size(), 0);
 }
 
-//TEST(StringTest, InitializerListConstructorNonEmpty) {
-//    bmstu::wstring str{L'С', L'Л', L'О', L'В', L'О'};
-//    ASSERT_STREQ(str.c_str(), L"СЛОВО");
-//    ASSERT_EQ(str.size(), 5);
-//}
+TEST(StringTest, InitializerListConstructorNonEmpty) {
+    bmstu::wstring str{L'С', L'Л', L'О', L'В', L'О'};
+    ASSERT_STREQ(str.c_str(), L"СЛОВО");
+    ASSERT_EQ(str.size(), 5);
+}
 
-//TEST(StringTest, ConstructorSizeW) {
-//    bmstu::wstring str(10);
-//    ASSERT_STREQ(str.c_str(), L"          ");
-//    ASSERT_EQ(str.size(), 10);
-//}
+TEST(StringTest, ConstructorSizeW) {
+    bmstu::wstring str(10);
+    ASSERT_STREQ(str.c_str(), L"          ");
+    ASSERT_EQ(str.size(), 10);
+}
 
-//TEST(StringTest, ConstructorSize) {
-//    bmstu::string str(10);
-//    ASSERT_STREQ(str.c_str(), "          ");
-//    ASSERT_EQ(str.size(), 10);
-//}
+TEST(StringTest, ConstructorSize) {
+    bmstu::string str(10);
+    ASSERT_STREQ(str.c_str(), "          ");
+    ASSERT_EQ(str.size(), 10);
+}
 
-//TEST(StringTest, ConstructorSizeOne) {
-//    bmstu::wstring str(1);
-//    ASSERT_STREQ(str.c_str(), L" ");
-//    ASSERT_EQ(str.size(), 1);
-//}
+TEST(StringTest, ConstructorSizeOne) {
+    bmstu::wstring str(1);
+    ASSERT_STREQ(str.c_str(), L" ");
+    ASSERT_EQ(str.size(), 1);
+}
 
 TEST(StringTest, FromCStr) {
     bmstu::string str("str\n");
