@@ -22,7 +22,7 @@ namespace bmstu {
 
         ///Конструктор пустой строки определённого размера
         basic_string(size_t size) {
-            ptr_ = new T[size];
+            ptr_ = new T[size + 1];
             size_ = size;
             for (size_t i = 0; i != size_; ++i){
                 *(ptr_ + i) = ' ';
