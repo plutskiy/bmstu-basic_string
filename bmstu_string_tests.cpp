@@ -457,12 +457,12 @@ TEST(StringTest, OStream) {
     ASSERT_STREQ(ss.str().c_str(), "String value");
 }
 
-//TEST(StringTest, OStreamW) {
-//    bmstu::wstring a_str(L"String значение");
-//    std::wstringstream ss;
-//    ss << a_str;
-//    ASSERT_STREQ(ss.str().c_str(), L"String значение");
-//}
+TEST(StringTest, OStreamW) {
+    bmstu::wstring a_str(L"String значение");
+    std::wstringstream ss;
+    ss << a_str;
+    ASSERT_STREQ(ss.str().c_str(), L"String значение");
+}
 
 TEST(StringTest, IStream) {
     std::stringstream ss;
@@ -473,21 +473,21 @@ TEST(StringTest, IStream) {
     ASSERT_STREQ(a_str.c_str(), "Value of\nstring");
 }
 
-//TEST(StringTest, IStreamW) {
-//    std::wstringstream ss;
-//    ss.str(L"Value of\nстрока");
-//    bmstu::wstring a_str;
-//    ss >> a_str;
-//    ASSERT_STREQ(a_str.c_str(), L"Value of\nстрока");
-//}
+TEST(StringTest, IStreamW) {
+    std::wstringstream ss;
+    ss.str(L"Value of\nстрока");
+    bmstu::wstring a_str;
+    ss >> a_str;
+    ASSERT_STREQ(a_str.c_str(), L"Value of\nстрока");
+}
 
-//TEST(StringTest, IStreamWNewLine) {
-//    std::wstringstream ss;
-//    ss.str(L"Value of\nstring");
-//    bmstu::wstring a_str;
-//    ss >> a_str;
-//    ASSERT_STREQ(ss.str().c_str(), L"Value of\nstring");
-//}
+TEST(StringTest, IStreamWNewLine) {
+    std::wstringstream ss;
+    ss.str(L"Value of\nstring");
+    bmstu::wstring a_str;
+    ss >> a_str;
+    ASSERT_STREQ(ss.str().c_str(), L"Value of\nstring");
+}
 
 TEST(StringTest, ConcatSymbol) {
     bmstu::wstring a_str;
