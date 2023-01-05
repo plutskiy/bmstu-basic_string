@@ -3,7 +3,7 @@
 
 
 TEST(Operator, CopyPrisvaivanie) {
-    bmstu::basic_string str1 = "Daite Avtomat Po Proge Pzh";
+    bmstu::basic_string str1 = "Dai5te Avtomat Po Proge Pzh";
     bmstu::basic_string<char> str2;
     str2 = str1;
     str1 = str1;
