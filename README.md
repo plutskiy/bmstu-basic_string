@@ -2,8 +2,7 @@
 
 | **CI Service** | Build Status |
 |:---------------|-------------:|
-| GitHub Actions | [![Build Status (GitHub Actions)](https://github.com/plutskiy/Homework1)](https://github.com/plutskiy/Homework1) |
-
+| GitHub Actions | [![Build Status (GitHub Actions)](https://github.com/plutskiy/Homework2/actions/workflows/ci-cmake_tests.yml/badge.svg)](https://github.com/plutskiy/Homework2/actions/workflows/ci-cmake_tests.yml) |
 Примеры гуглтестов [Google Test](https://code.google.com/p/googletest)
 
 ## Сборка
